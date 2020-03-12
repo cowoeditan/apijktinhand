@@ -8,26 +8,26 @@
         $password = md5($_POST['password']);
         
         $cek = "SELECT
-                   id_user, 
-                   username,
+                   ID_USER, 
+                   USERNAME,
                    PASSWORD
                 FROM
-                    scada.users
+                    SCADA.USERS
                 WHERE 
-                    username='$username' 
+                USERNAME='$username' 
                 AND 
-                    password='$password'";
+                PASSWORD='$password'";
 
         $query = oci_parse($connect, $cek);
         oci_execute($query);
         $result = oci_fetch_array($query, OCI_BOTH);
 
-        if (isset($result)) {
+        if ($result['ID_USER'] !== null) {
             # code...
             $response['value'] = 1;
             $response['message'] = "Login Berhasil";
-            $response['id_user'] = $result['id_user'];
-            $response['username'] = $result['username'];
+            $response['id_user'] = $result['ID_USER'];
+            $response['username'] = $result['USERNAME'];
             echo json_encode($response);
         } else {
            # code...
